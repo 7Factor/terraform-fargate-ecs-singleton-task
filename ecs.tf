@@ -42,9 +42,9 @@ resource "aws_ecs_service" "main_service" {
     }]
 
     content {
-      subnets           = network_configuration.value.subnets
-      security_groups   = network_configuration.value.security_groups
-      assign_public_ips = network_configuration.value.assign_public_ip
+      subnets          = network_configuration.value.subnets
+      security_groups  = network_configuration.value.security_groups
+      assign_public_ip = network_configuration.value.assign_public_ip
     }
   }
 }
