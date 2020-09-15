@@ -51,3 +51,8 @@ variable "task_role_arn" {
   default     = ""
   description = "The arn of the iam role you wish to pass to the ecs task containers."
 }
+
+variable "execution_role_arn" {
+  default     = ""
+  description = "This is required to run in fargate if you want to use the AWS cloudwatch log driver."
+}
