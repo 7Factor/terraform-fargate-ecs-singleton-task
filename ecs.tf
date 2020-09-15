@@ -12,6 +12,7 @@ resource "aws_ecs_task_definition" "main_task" {
 
   task_role_arn = var.task_role_arn
 
+
   dynamic "volume" {
     for_each = [for v in var.volumes : {
       name      = v.name
@@ -26,9 +27,9 @@ resource "aws_ecs_task_definition" "main_task" {
 
   dynamic "network_configuration" {
     for_each = [for n in var.network_configurations : {
-      subnets          = var.subnets
-      security_groups  = var.security_groups
-      assign_public_ip = var.assign_public_ip
+      subnets          = n.subnets
+      security_groups  = n.security_groups
+      assign_public_ip = n.assign_public_ip
     }]
 
     content {

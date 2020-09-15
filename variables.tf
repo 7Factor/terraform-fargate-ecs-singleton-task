@@ -37,16 +37,15 @@ variable "service_deployment_maximum_percent" {
 }
 
 variable "volumes" {
-  type        = list(any)
-  default     = [{ name = "dev-null", host_path = "/dev/null" }]
+  type        = list(object({ name = string, host_path = string }))
+  default     = []
   description = "A list of definitions to attach volumes to the ECS task. Amazon does not allow empty volume names once declared, so defaulting to a dummy name if this var is left unused."
 }
 
 variable "network_configurations" {
-  type        = list(any)
+  type        = list(object({ subnets = list(string), security_groups = list(string), assign_public_ip = bool }))
   description = "A list of definitions to attach volumes to the ECS task. Amazon does not allow empty volume names once declared, so defaulting to a dummy name if this var is left unused."
 }
-
 
 variable "task_role_arn" {
   default     = ""
