@@ -24,6 +24,15 @@ resource "aws_ecs_task_definition" "main_task" {
       host_path = volume.value.host_path
     }
   }
+}
+
+resource "aws_ecs_service" "main_service" {
+  name                       = "${var.app_name}-svc"
+  task_definition            = aws_ecs_task_definition.main_task.arn
+  cluster                    = data.aws_ecs_cluster.target_cluster.id
+  desired_count              = var.desired_task_count
+  launch_type                = "FARGATE"
+  deployment_maximum_percent = var.service_deployment_maximum_percent
 
   dynamic "network_configuration" {
     for_each = [for n in var.network_configurations : {
@@ -38,13 +47,4 @@ resource "aws_ecs_task_definition" "main_task" {
       assign_public_ips = network_configuration.value.assign_public_ip
     }
   }
-}
-
-resource "aws_ecs_service" "main_service" {
-  name                       = "${var.app_name}-svc"
-  task_definition            = aws_ecs_task_definition.main_task.arn
-  cluster                    = data.aws_ecs_cluster.target_cluster.id
-  desired_count              = var.desired_task_count
-  launch_type                = "FARGATE"
-  deployment_maximum_percent = var.service_deployment_maximum_percent
 }
