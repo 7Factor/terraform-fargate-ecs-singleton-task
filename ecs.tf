@@ -48,4 +48,18 @@ resource "aws_ecs_service" "main_service" {
       assign_public_ip = network_configuration.value.assign_public_ip
     }
   }
+
+  dynamic "loadbalancer" {
+    for_each = [for l in var.loadbalancers : {
+      target_group_arn = l.target_group_arn
+      container_name   = l.container_name
+      container_port   = l.container_port
+    }]
+
+    content {
+      target_group_arn = loadbalancer.value.target_group_arn
+      container_name   = loadbalancer.value.container_name
+      container_port   = loadbalancer.value.container_port
+    }
+  }
 }
