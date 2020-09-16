@@ -47,7 +47,7 @@ variable "network_configurations" {
   description = "A list of definitions to attach network configurations to the ECS task."
 }
 
-variable "loadbalancers" {
+variable "load_balancers" {
   type        = list(object({ target_group_arn = list(string), container_name = string, container_port = number }))
   description = "A list of definitions to attach load balancers to the ECS task."
 }

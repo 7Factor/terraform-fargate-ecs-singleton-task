@@ -50,16 +50,16 @@ resource "aws_ecs_service" "main_service" {
   }
 
   dynamic "load_balancer" {
-    for_each = [for l in var.loadbalancers : {
+    for_each = [for l in var.load_balancers : {
       target_group_arn = l.target_group_arn
       container_name   = l.container_name
       container_port   = l.container_port
     }]
 
     content {
-      target_group_arn = loadbalancer.value.target_group_arn
-      container_name   = loadbalancer.value.container_name
-      container_port   = loadbalancer.value.container_port
+      target_group_arn = load_balancer.value.target_group_arn
+      container_name   = load_balancer.value.container_name
+      container_port   = load_balancer.value.container_port
     }
   }
 }
