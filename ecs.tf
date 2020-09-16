@@ -49,7 +49,7 @@ resource "aws_ecs_service" "main_service" {
     }
   }
 
-  dynamic "loadbalancer" {
+  dynamic "load_balancer" {
     for_each = [for l in var.loadbalancers : {
       target_group_arn = l.target_group_arn
       container_name   = l.container_name
